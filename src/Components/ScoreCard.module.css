@@ -1,0 +1,16 @@
+.scorecard{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.scorecard h2{
+  font-size: 35px;
+  font-style: italic;
+}
+.scorecard button{
+
+  color: aquamarine;
+  margin-bottom: 10px;
+  text-align: center;
+}
