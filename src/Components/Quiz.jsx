@@ -1,9 +1,9 @@
 import styles from "./Quiz.module.css";
-
+import QuizForm from "./Quiz_Form";
 import { useEffect, useRef, useState } from "react";
 import ScoreCard from "./ScoreCard";
 import Spinner from "./Spinner";
-
+import Timer from "./Timer.jsx"
 const decodeHtml = (html) => {
   const txt = document.createElement("textarea");
   txt.innerHTML = html;
@@ -18,6 +18,10 @@ const Quiz = () => {
   const [score, setscore] = useState(0); //for calculating the score
   const [resultdisplay, setresultdisplay] = useState(false); //to know when to display the result
 
+  const[category ,setcategory]=useState("");
+  const[difficulty,setdifficulty]=useState("");
+  const[quizStarted,setQuizStarted]=useState(false);
+
   //Version-2 : Spinner 
     const [loading,loadingState]=useState(false);
 
@@ -29,11 +33,16 @@ const Quiz = () => {
   const option_array = [Option1, Option2, Option3, Option4];
 
 
-  const fetchData = async () => {
+  const handleStart = async (e) => {
+    e.preventDefault(); 
+    loadingState(true);
+    setQuizStarted(true);
     try {
-      
-      loadingState(true);
-      const url = "https://opentdb.com/api.php?amount=10&type=multiple";
+      let url = "https://opentdb.com/api.php?amount=10&type=multiple";
+
+      if (category) url += `&category=${category}`;
+      if (difficulty) url += `&difficulty=${difficulty}`;
+
       const res = await fetch(url);
       const resData = await res.json();
 
@@ -59,11 +68,9 @@ const Quiz = () => {
     } catch (error) {
       console.log("Error in fetching in data");
     }
+
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
   
   const checkans = (event, givenanswer, question) => {
     if (lock === false) {
@@ -107,7 +114,9 @@ const Quiz = () => {
     setlock(false);
     setresultdisplay(false);
     setscore(0);
-    fetchData();
+    
+   
+    setQuizStarted(false);
   };
 
   const again=()=>{
@@ -117,13 +126,27 @@ const Quiz = () => {
     setresultdisplay(false);
     setscore(0);
   }
+  const onTimeUp = () => {
+    setlock(true); 
+    option_array[question.ans - 1].current.classList.add("correct");
+
+  };
+  
 
   return (
     <div className={styles.container}>
       <h1>QUIZ APP</h1>
       <hr className={styles.hr} />
   
-      {loading ? (
+  {!quizStarted ? (
+  <QuizForm
+    category={category}
+    setCategory={setcategory}
+    difficulty={difficulty}
+    setDifficulty={setdifficulty}
+    handleStart={handleStart}
+  />
+): loading ? (
         <Spinner />
       ) : resultdisplay ? (
         <ScoreCard
@@ -134,9 +157,13 @@ const Quiz = () => {
         />
       ) : question ? (
         <>
+
           <h2 className={styles.ques}>
             {index + 1}. {question.question}
           </h2>
+
+          <Timer key={index} duration={15} lock={lock} onTimeUp={onTimeUp} />
+
           <ul>
             <li ref={Option1} onClick={(e) => checkans(e, 1, question)}>
               {question.option1}
@@ -161,4 +188,5 @@ const Quiz = () => {
       )}
     </div>
   );}
+  
   export default Quiz;
