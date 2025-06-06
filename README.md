@@ -1,12 +1,19 @@
-# React + Vite
+# ⚡ Advanced Quiz App – React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dynamic and interactive quiz application built with React. This app fetches trivia questions from the [Open Trivia DB](https://opentdb.com/) API and provides users with a customizable quiz experience based on selected difficulty levels.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✅ **Category & Difficulty Selection** – Choose from various quiz categories and difficulty levels (Easy, Medium, Hard)
+- 🕐 **Countdown Timer** – Each quiz is timed with a countdown to increase challenge
+- 🔄 **Loading Spinner** – Displays a loader while fetching questions from the API
+- 🧠 **Multiple Choice Questions** – Clear layout with randomized answer options
+- 📊 **Score Tracking** – Displays final score after quiz submission
+- ⚙️ **Reusable Components** – Built with modular and clean React components
 
-## Expanding the ESLint configuration
+## 🧰 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- ⚛️ React
+- 📦 Axios
+- 🎨 CSS Modules / Styled Components (if applicable)
+- 🔗 Open Trivia DB API
